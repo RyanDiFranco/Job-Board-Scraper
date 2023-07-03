@@ -9,6 +9,9 @@ search_criteria allows you to specify many aspects of the job search and how you
 Configure search_criteria with the number of pages, job titles, and locations you want to search. Add in all of the phrases that you want to look for. Keep in mind that phrases can repeat if you list out two variants, such as "Excel" and "MS Excel". I prefer to default to the shortest, most likely format that a phrase may appear as (so just "Excel" in this case). Set your file location (needs to be a .xlsx file, will create it if it doesn't already exist). Set the min and max delay between refreshes (this determines how fast you will search through pages).
 Once criteria are entered, run Indeed_Scraper.py. It can take a lengthy time if you are searching for a ton of jobs, but isn't that intensive. 
 
+# Time
+Running this can take substantial time if you are searching for many jobs, locations, and pages. The number of jobs searched is going to be equal to jobs * locations * pages * 15, so keep that in mind. By default, Indeed has a pretty wide range on location, so avoid putting two locations that are directly near each other. I would be careful about how many pages you put too.
+
 # Tips and help
 For min and max delay, I have gotten 2 seconds to work (meaning a delay of anywhere from 2 to 2.99 seconds). 
 For locations, "Remote" seems to be clunky. Many job postings won't actually be Remote, so you may end up with some jobs that are extremely off from where you are looking.
