@@ -4,7 +4,7 @@ pages = 5
 min_delay = 2 
 max_delay = 2 
 # Type file path for where the Excel file should be stored.
-file_path = "D:/Professional Work/job_scores.xlsx"
+file_path = "C://Documents/job_scores.xlsx"
 
 # List out job titles that you want to search (Ex. Software Developer)
 job_titles = [
