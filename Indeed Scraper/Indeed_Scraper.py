@@ -1,3 +1,4 @@
+from re import L
 import search_criteria
 import time
 import sys
@@ -7,19 +8,12 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
-from bs4 import BeautifulSoup #webscrape
-from collections import defaultdict #default dictionary: store a list with each key
-import pandas as pd  #DF
+from bs4 import BeautifulSoup 
+from collections import defaultdict 
+import pandas as pd
 import openpyxl
-import re   #regular expressions
-import datetime     #format date/time
 
-options = Options()
-options.add_experimental_option("detach", True)
-options.add_argument("--incognito")
-
-start_time = time.time()
-
+# Grabbing all of the customizable parts from search_criteria
 job_titles = search_criteria.job_titles
 locations = search_criteria.locations
 max_pages = search_criteria.pages
@@ -29,23 +23,25 @@ good_education = list(set(search_criteria.good_education))
 bad_education = list(set(search_criteria.bad_education))
 good_skills = list(set(search_criteria.good_skills))
 bad_skills = list(set(search_criteria.bad_skills))
-
 min_delay = search_criteria.min_delay
 max_delay = search_criteria.max_delay
 actual_max = max_delay + 1 # Adjusted max delay for calculating time estimates
-
 file_path = search_criteria.file_path
-wait_user_input = search_criteria.wait_user_input
+
+# Options for Selenium Chrome. Incognito to get accurate posting date from Indeed.
+options = Options()
+options.add_experimental_option("detach", True)
+options.add_argument("--incognito")
 
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
-job_urls = set()
-job_dates_dict = {} #Dictionary to store dates corresponding to urls
+job_urls = set() # Using a set to make sure urls do not duplicate
+job_dates_dict = {} # Dictionary to store dates corresponding to urls. Postings don't show date, has to be grabbed during initial stage.
 
+# Calculations for how long process may take.
 max_job_pages = len(job_titles) * len(locations) * max_pages # Theoretical max number of pages for finding jobs
-max_links = max_job_pages * 15 # Theoretical max number of jobs if every page is unique
-
+max_links = max_job_pages * 15 # Theoretical max number of jobs if every page is unique jobs
 max_stage_one_time = (max_links / 15) * (actual_max)
-max_stage_two_time = max_links * (actual_max)
+max_stage_two_time = max_links * actual_max
 max_time = max_stage_one_time + max_stage_two_time
 print("Max Stage One Estimated Time = " + str(max_stage_one_time) + " seconds.")
 print("Max Total Estimated Time = " + str(max_time) + " seconds. Beginning job scraping")
@@ -66,17 +62,14 @@ def calculate_score(good_phrases, bad_phrases, description):
     return score, count
 
 for job in job_titles:
-    #Go through each job title
+    # Go through each job title
     for location in locations:
-        #Go through each location
+        # Go through each location
         for page in range(max_pages):
 
             url = "https://indeed.com/jobs?q=" + job + "&l=" + location + "&start=" + str(page * 10)
-            # "&sort=date" + Removed this to hopefully fix issues.
             driver.get(url)
-          
-            time.sleep(random.randint(min_delay, max_delay) + (random.randint(0, 99) / 100)) # Picks between min and max, adds a random decimal
-            progress_bar.update(1)
+            # "&sort=date" + Removed this to hopefully fix issues. For some reason, when posting the link directly to Indeed with sorting by date, first page doesn't sort properly in the HTML
 
             html = driver.page_source
 
@@ -102,17 +95,26 @@ for job in job_titles:
                             job_date = "None"
                         job_dates_dict[job_link] = job_date
 
+            time.sleep(random.randint(min_delay, max_delay) + (random.randint(0, 99) / 100)) # Picks between min and max, adds a random decimal.
+
+            progress_bar.update(1)
+
 progress_bar.close()
 job_urls = list(job_urls)
 num_links = len(job_urls)
 num_dates = len(job_dates_dict)
+# Verifying that links matches the number of dates.
 if num_links != num_dates:
     print("Mismatch on dates and links. Closing now.")
     sys.exit(1)
+# Displaying how many jobs are actually gathered
 print("\nNumber of Links Gathered = " + str(num_links) + " of " + str(max_links) + " possible.")
+max_stage_two_time = num_links * actual_max
+print("Maximum Stage Two Estimated Time = " + str(max_stage_one_time) + " seconds.")
 
 # Code for iterating over job URLS
 print("Scraping is beginning")
+
 data_title = []
 data_company = []
 data_location = []
@@ -193,6 +195,7 @@ for link in job_urls:
     progress_bar.update(1)
 
 progress_bar.close()
+# For some reason a delay helps here 
 time.sleep(0.1)
 data = {
     "Title": data_title,

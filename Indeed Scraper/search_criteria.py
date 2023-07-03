@@ -1,165 +1,56 @@
+# Type how many pages you want to search for each job + location pairing.
 pages = 5
-min_delay = 2 # min delay between pages in seconds
-max_delay = 2 # max delay between pages in seconds
+# Type the minimum and maximum delay in seconds between refreshing pages. Lower = faster, but higher chance of captcha blocking and being a nuisance. 
+min_delay = 2 
+max_delay = 2 
+# Type file path for where the Excel file should be stored.
 file_path = "D:/Professional Work/job_scores.xlsx"
-wait_user_input = False
+
+# List out job titles that you want to search (Ex. Software Developer)
 job_titles = [
-    # Core
-    "Process Engineer",
-    "Data Analyst",
-    "Chemical Engineer", 
-    "Software Engineer", 
-    #"Software Developer",
-    # Secondary
-    #"Full Stack Developer",
-    #"Front End Developer",
-    #"Back End Developer",
-    #"Data Engineer",
-    "Chemist",
-    #"Quality Engineer",
-    #"Project Engineer",
-    #"Manufacturing Engineer",
-    #"Research Engineer",
-    #"Industrial Engineer",
-    #"Product Engineer",
-    #"Design Engineer",
-    #"Materials Engineer",
+    "Software Developer",
+
     ]
+
+# List out locations you want to search (Ex. New York City, NY) Note: Remote can be very tricky and yield not great results. 
 locations = [
-    # Primary
-    #"Westlake, OH",
-    "Cleveland, OH",
-    #"Elyria, OH",
-    #"Avon, OH",
-    #"Remote",
-    # Secondary
-    "Akron, OH",
-    "Columbus, OH",
+    "New York City, NY",
+
     ]
 
+# List out phrases that are beneficial in terms of experience (Ex. 0-3 years of experience)
 good_experience = [
-    # Good values for experience level
-    "entry level",
-    "no experience",
-    "0-2 years",
-    "0-2 year",
-    "0 to 2 years",
-    "0 to 2 year",
-    "1 year",
-    "one year",
-    "fresh graduate",
-    "entry-level",
-    "junior",
-    "recent graduate",
-    "associate",
+    "0-3 years",
+
     ]
 
+# List out phrases that are detrimental in terms of experience (Ex. 10+ years)
 bad_experience = [
-    # Bad values for experience level
-    "3 years",
-    "3+ years",
-    "2+ years",
-    "five years",
-    "3-5 years",
-    "5 year",
-    "5 years",
-    "5+ year",
-    "5+ years",
-    "5+ years of experience",
-    "minimum 3 years experience",
-    "senior",
-    "senior-level position",
-    "managerial experience required",
-    "expert-level",
-    "advanced proficiency",
-    "extensive experience",
-    "subject matter expert",
-    "10 years or more experience",
-    "5 years in a similar role",
-    "proven track record of 7+ years",
-    "leadership experience",
-    "5+ years",
-    "minimum 3 years",
-    "senior-level",
-    "managerial experience",
-    "expert-level",
-    "advanced proficiency",
-    "extensive experience",
-    "subject matter expert",
-    "10 years or more",
-    "5 years in a similar role",
-    "7+ years",
-    "leadership experience",
+    "10+ years",
+  
     ]
 
+# List out phrases that match your education level (Ex. software engineering)
 good_education = [
-    # Good values for education
-    "chemical engineering",
-    "bs in engineering",
-    "Bachelor",
-    "degree in a related field",
-    "BSE",
-    "Bachelor of Science",
-    "Engineering Technology",
-    "STEM",
-    "Degree in engineering",
+    "software engineering",
+ 
     ]
 
+# List out phrases that don't match your education level (Ex. Doctorate)
 bad_education = [
-    # Bad values for education
-    "PhD",
-    "advanced degree",
-    "postgraduate",
-    "graduate-level",
-    "doctorate"
+    "doctorate",
+   
     ]
 
+# List out phrases that match your skillset (Ex. Python)
 good_skills = [
-    # Good values for skills
-    "C#",
-    "SQL",
-    "Arduino",
-    "MATLAB",
-    "MS Office",
-    "Powerpoint",
-    "Excel",
-    "ChemCAD",
-    "Simulink",
-    "JMP",
-    "Fusion 360",
-    "Unity",
-    "Six Sigma",
-    "CAD",
-    "RCA",
-    "Root-cause analysis",
-    "root cause analysis",
-    "Standard operating procedure",
-    "SOP",
-    "App Development",
-    "Data Analysis",
-    "DoE",
-    "Engineering Skills",
-    "Git",
     "Python",
-    "Pandas",
-    "Selenium",
-    "BeautifulSoup",
-    "DNN",
-    "Deep Neural Networks",
-    "Feedforward Algorithms",
-    "Machine Learning",
-    "AI",
-    "Problem Solving",
-    "Materials Science",
-    "material balance",
-    "chemistry",
-    "chemical engineering",
-    "process engineering",
-    "flow diagram"
+    
     ]
 
+# List out phrases that don't match your skillset (Ex. JavaScript) Note: A lot harder to fill out than other categories, but just keep an eye on what skills jobs want that you don't/won't have.
 bad_skills = [
-    # Bad values for skills
+    "JavaScript",
 
     ]
 
